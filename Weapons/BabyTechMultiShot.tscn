@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SpriteSheets/BabyTown2Weapons.png" type="Texture" id=1]
+[ext_resource path="res://Weapons/BabyTechMultiShot.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 1, 0, 1, 1, 0, 0, 1 )
+
+[node name="BabyTechMultiShot" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+vframes = 5
+hframes = 4
+frame = 3
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position2D" type="Position2D" parent="Sprite"]
+position = Vector2( 16, -4 )
+__meta__ = {
+"_edit_lock_": true,
+"_gizmo_extents_": 15.0
+}
+
+[node name="HoldingPoint" type="Position2D" parent="Sprite"]
+position = Vector2( -2, 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HoldingPoint2" type="Position2D" parent="Sprite"]
+position = Vector2( 11.5, -1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Sprite"]
+position = Vector2( 16, -4 )
+emitting = false
+amount = 35
+lifetime = 0.05
+one_shot = true
+initial_velocity = 250.0
+initial_velocity_random = 1.0
+color_ramp = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Reload" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.75
+one_shot = true
+[connection signal="timeout" from="Reload" to="." method="_on_Reload_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://SpriteSheets/BabyTown2Weapons.png" type="Texture" id=2]
+[ext_resource path="res://Weapons/Bullets/RailgunBullet.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 33, 1.5 )
+
+[sub_resource type="Curve" id=2]
+bake_resolution = 20
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.747253, 0.5 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[node name="RailGunBullet" type="Sprite"]
+texture = ExtResource( 2 )
+vframes = 5
+hframes = 4
+frame = 16
+script = ExtResource( 3 )
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2( -30.5, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="DeLagger" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Trail" type="Line2D" parent="."]
+position = Vector2( -21, 0 )
+width = 2.0
+width_curve = SubResource( 2 )
+default_color = Color( 0.784314, 1, 0.784314, 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+[connection signal="body_entered" from="Area2D" to="." method="_on_RailGunBullet_body_entered"]
+[connection signal="timeout" from="DeLagger" to="." method="_on_DeLagger_timeout"]

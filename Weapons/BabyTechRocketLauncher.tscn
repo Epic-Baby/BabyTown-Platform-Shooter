@@ -1,0 +1,67 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://SpriteSheets/BabyTown2Weapons.png" type="Texture" id=1]
+[ext_resource path="res://Weapons/BabyTechRocketLauncher.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 1, 0.247059, 1, 1, 0.498039, 0, 1 )
+
+[node name="BabyTechRocketLauncher" type="Node2D"]
+show_behind_parent = true
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 16, 0 )
+texture = ExtResource( 1 )
+vframes = 5
+hframes = 4
+frame = 8
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Position2D" type="Position2D" parent="Sprite"]
+position = Vector2( 21, -3.5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HoldingPoint" type="Position2D" parent="Sprite"]
+position = Vector2( -9, -1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="HoldingPoint2" type="Position2D" parent="Sprite"]
+position = Vector2( 0, 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="Sprite"]
+position = Vector2( -22, -3.5 )
+emitting = false
+amount = 20
+lifetime = 0.2
+one_shot = true
+emission_shape = 2
+emission_rect_extents = Vector2( 1, 2 )
+direction = Vector2( -1, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 1.0
+color_ramp = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Reload" type="Timer" parent="."]
+wait_time = 4.5
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+[connection signal="timeout" from="Reload" to="." method="_on_Reload_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

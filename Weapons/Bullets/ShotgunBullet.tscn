@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://SpriteSheets/BabyTown2Weapons.png" type="Texture" id=1]
+[ext_resource path="res://Weapons/Bullets/Trail.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Weapons/Bullets/ShotgunBullet.gd" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16.6, 0.75 )
+
+[node name="Sprite" type="Sprite"]
+texture = ExtResource( 1 )
+offset = Vector2( 0, 0.5 )
+vframes = 5
+hframes = 4
+frame = 15
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Hit" type="Area2D" parent="."]
+position = Vector2( 15, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Trail" parent="." instance=ExtResource( 2 )]
+
+[node name="DeLagger" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+[connection signal="body_entered" from="Hit" to="." method="_on_ShotgunBullet_body_entered"]
+[connection signal="timeout" from="DeLagger" to="." method="_on_DeLagger_timeout"]

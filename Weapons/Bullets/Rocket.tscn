@@ -1,0 +1,72 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Weapons/Bullets/Rocket.gd" type="Script" id=1]
+[ext_resource path="res://SpriteSheets/BabyTown2Weapons.png" type="Texture" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 5.08278, 1.98859 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 5.89776, 2.29173 )
+
+[sub_resource type="Gradient" id=3]
+colors = PoolColorArray( 1, 1, 0, 1, 0.784314, 0, 0, 1 )
+
+[node name="Sprite" type="Sprite"]
+texture = ExtResource( 3 )
+vframes = 5
+hframes = 4
+frame = 13
+script = ExtResource( 1 )
+
+[node name="Colision" type="Area2D" parent="."]
+position = Vector2( -1.956, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colision"]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Hit" type="Area2D" parent="."]
+position = Vector2( -1.88, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit"]
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Exhaust" type="CPUParticles2D" parent="."]
+position = Vector2( -5, 0 )
+amount = 100
+local_coords = false
+direction = Vector2( -1, 0 )
+spread = 10.0
+gravity = Vector2( 0, 0 )
+initial_velocity = 96.77
+angular_velocity = 100.0
+angular_velocity_random = 1.0
+linear_accel = -75.0
+color_ramp = SubResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="DeLagger" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="body_entered" from="Hit" to="." method="_on_Rocket_body_entered"]
+[connection signal="timeout" from="DeLagger" to="." method="_on_DeLagger_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
